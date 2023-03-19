@@ -1,0 +1,26 @@
+version: '2.1'
+services:
+  config-service:
+    build: config-service
+    ports:
+      - 8887:8887
+
+  registry-service:
+    build: registry-service
+
+  gatewayservice:
+    build: gatewayservice
+      
+  user-management-service:
+    build: user-management-service
+    ports:
+      - 5003:5003
+      
+  notice-management-service-1:
+    build: notice-management-service   
+    
+  notice-management-service-2:
+    build: notice-management-service 
+    
+
+ 

@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: notice-management-service
+  config:
+      import: optional:configserver:http://user:password@config-service:8887
+  cloud:    
+    config:      
+      uri: http://user:password@config-service:8887
+      fail-fast: true
+      password: password
+      username: user
+      
+  
+  
+  #java -Dserver.port=6002 -jar shop-management-service.jar
+ 
+ 
+      
+    
+
+

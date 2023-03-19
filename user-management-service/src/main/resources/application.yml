@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: user-management-service
+  config:
+      import: optional:configserver:http://user:password@config-service:8887
+  cloud:    
+    config:      
+      uri: http://user:password@config-service:8887
+      fail-fast: true
+      password: password
+      username: user

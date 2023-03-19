@@ -1,0 +1,96 @@
+version: '2.1'
+services:
+  config-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_USER: $CONFIG_SERVICE_USER
+    image: noticeit/config-service
+    container_name: config-service
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  registry-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_USER: $CONFIG_SERVICE_USER
+    image: noticeit/registry-service
+    container_name: registry-service
+    restart: always
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 8761:8761
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  gatewayservice:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_USER: $CONFIG_SERVICE_USER
+    image: noticeit/gatewayservice
+    container_name: gatewayservice
+    restart: always    
+    ports:
+      - 4000:4000
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"    
+
+  notice-management-service-1:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_USER: $CONFIG_SERVICE_USER
+      NOTICEM_SERVICE_PASSWORD: $NOTICEM_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      INSTANCE: "1"
+    image: noticeit/notice-management-service    
+    restart: always  
+    expose:
+      - "6001"
+    ports:
+      - 6001:6001
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"   
+        
+  notice-management-service-2:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_USER: $CONFIG_SERVICE_USER
+      NOTICEM_SERVICE_PASSWORD: $NOTICEM_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      INSTANCE: "2"
+    image: noticeit/notice-management-service    
+    restart: always
+    expose:
+      - "6002"
+    ports:
+      - 6002:6002
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10" 
+  
+    
+  user-management-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_USER: $CONFIG_SERVICE_USER
+      USERM_SERVICE_PASSWORD: $USERM_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: noticeit/user-management-service
+    container_name: user-management-service
+    restart: always    
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+  

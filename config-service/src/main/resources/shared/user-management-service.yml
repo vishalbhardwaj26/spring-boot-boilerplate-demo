@@ -1,0 +1,23 @@
+server:
+  port: 5003
+  servlet:
+        context-path: /usermgmts
+  
+eureka:
+    client:        
+        fetchRegistry: true
+        serviceUrl:
+            defaultZone: http://registry-service:8761/eureka
+    instance:        
+        client:            
+            serviceurl:
+                defaultZone: http://registry-service:8761/eureka
+                password: password
+                username: user 
+
+feign:
+  hystrix:
+    enabled: true
+
+
+

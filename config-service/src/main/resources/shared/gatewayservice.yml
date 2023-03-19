@@ -1,0 +1,43 @@
+spring:  
+  cloud:      
+    gateway:
+      routes:
+        - id: user-management-service
+          #uri: http://localhost:5003
+          uri: http://user-management-service:5003
+          predicates:
+            - Path=/usermgmts/**  
+        - id: notice-management-service   
+          #uri: lb://NOTICE-MANAGEMENT-SERVICE
+          uri: lb://notice-management-service
+          predicates:
+            - Path=/noticsmgmts/**  
+            
+
+ribbon:
+  eureka:
+    enabled: false
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+
+
+server:
+  port: 4000
+  
+eureka:  
+    client:        
+        fetchRegistry: true
+        serviceUrl:
+            defaultZone: http://registry-service:8761/eureka
+    instance:
+        client:            
+            serviceurl:
+                #defaultZone: http://localhost:8761/eureka
+                defaultZone: http://registry-service:8761/eureka
+                password: password
+                username: user 
+                
+                
+#http://localhost:4000/noticsmgmts/noticeboards/Hello - though api gaetway
+# http://localhost:6012/noticsmgmts/noticeboards/Hello - direct to service
+# docker-compose up --scale pspdfkit=5

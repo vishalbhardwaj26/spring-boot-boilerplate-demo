@@ -1,0 +1,23 @@
+spring:
+    
+server:
+  servlet:
+    context-path: /noticsmgmts
+  port: 6001
+
+eureka:
+    client:        
+        fetchRegistry: true
+        serviceUrl:
+            defaultZone: http://registry-service:8761/eureka
+    instance:
+        preferIpAddress: true
+        client:            
+            serviceurl:
+                defaultZone: http://registry-service:8761/eureka
+                password: password
+                username: user 
+
+feign:
+  circuitbreaker:
+    enabled: true
